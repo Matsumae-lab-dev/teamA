@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from "react-router-dom";
-import './signin.css';
 
 //型宣言
 type Inputs = {
