@@ -44,6 +44,7 @@ export default function Signin() {
     const loginErrorMsg = () => {
         //setErrorMsg()でerrorMsgの値を更新
         setErrorMsg("ユーザーIDもしくはパスワードが間違っています。");
+        navigate("/Todolist");
     }
     
     //入力内容をクリア
