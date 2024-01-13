@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function Top() {
+export default function Todolist_app() {
     const navigate = useNavigate();
     
     return (

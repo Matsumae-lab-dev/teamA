@@ -1,8 +1,8 @@
 //App.tsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Signin from "./views/signin";
-import Top from "./views/top"
-import Todolist from "./views/todolist"
+import Signin from "./views/signin.tsx";
+import Top from "./views/top.tsx"
+import Todolist_app from "./views/Todolist_app.tsx"
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path={`/`} element={<Signin />} />
         <Route path={`/Top`} element={<Top />} />
-        <Route path={`/Todolist`} element={<Todolist/>}></Route>
+        <Route path={`/Todolist_app`} element={<Todolist_app/>}></Route>
       </Routes>
     </BrowserRouter>
   );

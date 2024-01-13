@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from "react-router-dom";
 
+
 //型宣言
 type Inputs = {
     username: string;
@@ -44,7 +45,8 @@ export default function Signin() {
     const loginErrorMsg = () => {
         //setErrorMsg()でerrorMsgの値を更新
         setErrorMsg("ユーザーIDもしくはパスワードが間違っています。");
-        navigate("/Todolist");
+        navigate("/Todolist_app");
+        
     }
     
     //入力内容をクリア
