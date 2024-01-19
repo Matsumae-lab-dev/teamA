@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from "react-router-dom";
+import "./sigmin.css"
 
 //型宣言
 type Inputs = {
@@ -19,9 +20,7 @@ export default function Signin() {
         register,
         handleSubmit,
         reset,
-        formState: { errors }
-    } = useForm<Inputs>({
-        mode: 'onChange',
+        formState: { errors } } = useForm<Inputs> ({ mode: 'onChange',
     });
 
     //ログインボタンを押した際の処理
@@ -37,14 +36,13 @@ export default function Signin() {
     
     //ログインに成功した場合、次のページへ遷移
     const loginSuccess = () => {
-        navigate("/Top");
+        navigate("/Todolist");
     }
 
     //ログインに失敗した場合のエラーメッセージをセット
     const loginErrorMsg = () => {
         //setErrorMsg()でerrorMsgの値を更新
         setErrorMsg("ユーザーIDもしくはパスワードが間違っています。");
-        navigate("/Todolist");
     }
     
     //入力内容をクリア
