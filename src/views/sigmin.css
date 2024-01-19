@@ -1,0 +1,52 @@
+
+.formContainer {
+  width: 80%;
+  margin: auto;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.uiForm {
+  margin-top: 20px;
+}
+
+.formField {
+  margin-bottom: 20px;
+}
+
+.formField label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.formField input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+}
+
+.errorMsg {
+  color: red;
+}
+
+.loginButton {
+  display: flex;
+  justify-content: space-between;
+}
+
+.loginButton button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.loginButton button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

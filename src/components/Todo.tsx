@@ -1,4 +1,4 @@
-import React from 'react'
+//Todoリストのタスク状況を管理
 
 const Todo = ({todo, toggleTodo}) => {
     const handleTodoClick = () => {
