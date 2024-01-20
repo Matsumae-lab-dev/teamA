@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 //型宣言
 type Inputs = {
@@ -102,17 +103,16 @@ export default function Signin() {
                 </div>
                 <ErrorMessage errors={errors} name="password" render={({message}) => <span>{message}</span>} />
                 <div className="loginButton">
-                    <button 
-                        type = "submit"
-                        className="submitButton"
-                        >ログイン
-                    </button>
-                    <button 
-                        type = "button"
-                        className="clearButton" 
-                        onClick={clearForm}
-                        >クリア
-                    </button>
+
+                <Button variant="outlined" type = "submit"
+                className="submitButton" > 
+                LOGIN
+                </Button>
+                
+                <Button variant="outlined" onClick={clearForm}
+                color="error"> 
+                CLEAR
+                </Button>
                 </div>
             </div>
         </form>
