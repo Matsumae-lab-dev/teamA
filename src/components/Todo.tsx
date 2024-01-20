@@ -1,17 +1,20 @@
 //Todoリストのタスク状況を管理
 
-const Todo = ({todo, toggleTodo}) => {
-    const handleTodoClick = () => {
-        toggleTodo(todo.id)
-    }
+type TodoType = {
+  completed : boolean
+  id : string
+  name : string
+}
+
+type ToggleTodoType = (id: string) => void
+
+const Todo = ({todo, toggleTodo}:{todo: TodoType, toggleTodo:ToggleTodoType}) => {
   return (
     <div>
         <label >
             <input 
                 type="checkbox" 
-                checked = {todo.completed} 
-                readOnly
-                onChange={handleTodoClick}
+                onChange={() => toggleTodo(todo.id)}
                 />
         </label>
         {todo.name}

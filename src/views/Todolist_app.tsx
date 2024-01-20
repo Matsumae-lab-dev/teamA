@@ -5,28 +5,38 @@ import { v4 as uuidv4} from "uuid";
 import './Todolist_app.css'
 
 
+type PrevTodosType = {
+  id : string
+  name : string
+  completed : boolean
+}
 
 export default function Top() {
   const navigate = useNavigate();
 
-  const [todos, setTodos] = useState([ ]);
+  const [todos, setTodos] = useState<PrevTodosType[]>([]);
+  
 
-  const todoNameRef  = useRef<any>(null);
-
+  const todoNameRef  = useRef<HTMLInputElement>(null);
+  
   const handleAddTodo = () => {
-    const name = todoNameRef.current.value;
-    if (name === "") return;
+    const name = todoNameRef.current?.value;
+    if (name === "" || name === null) return;
     setTodos((prevTodos) => {
-      return [...prevTodos, { id: uuidv4() , name: name, completed: false}];
+      return [...prevTodos, { id: uuidv4() , name: name as string, completed: false}];
     })
-    todoNameRef.current.value = null;
+    if (todoNameRef.current) {
+      todoNameRef.current.value = "";
+    }
   };
 
-  const toggleTodo = (id) => {
-    const newTodos = [...todos ];
-    const todo = newTodos.find((todo) =>  todo.id === id);
-    todo.completed = !todo.completed;
+  const toggleTodo = (id : string) => {
+    const newTodos = todos;
+    const todo = newTodos.find(( todo : PrevTodosType ) =>  todo.id === id);
+    if (todo === undefined) return;
+    todo.completed = !todo.completed as boolean;
     setTodos(newTodos); 
+    console.log(todo.completed)
 
   }
 
@@ -42,7 +52,7 @@ export default function Top() {
       <input type="text" ref={todoNameRef} />
       <button onClick={handleAddTodo} >タスクを追加</button>
       <button onClick={handleClear}>完了したタスクの削除</button>
-      <div>残りのタスク{todos.filter((todo) => !todo.completed).length}</div>
+      <div>残りのタスク:{todos.filter((todo) => !todo.completed).length}</div>
       <button 
         onClick={() => navigate('/')}
       >ログアウト
