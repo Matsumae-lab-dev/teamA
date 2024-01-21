@@ -2,6 +2,10 @@ import { useState, useRef } from "react";
 import {  useNavigate } from "react-router-dom";
 import Todolist from "./Todolist"
 import {v4 as uuidv4} from "uuid";
+import * as React from 'react';
+import Snackbar from '@mui/material/Snackbar';
+
+
 
 
 
@@ -13,21 +17,22 @@ export default function Top() {
     
     const todoNameRef =useRef<any>();
 
+    const [open, setOpen] = React.useState(false);
+    
     const handleAddTodo =() => {
         //タスクを追加  読み込み
 
         const name = todoNameRef.current.value;
         const Todos = [...todos];//コピー
         const todo = Todos.find((todo) => todo.name === name);
+        //関数追加　アラート
         
+          
         if( todo){
-            setTodos((prevTodos: any) => {
-
-                return [...prevTodos,{id:uuidv4(),name: "同じタスクが存在しています", completed: false} ]
-           //　settodos 更新　前のタスクの状態(prevTodos)に今のタスクを追加
-            });}
-
-         else{     
+        setOpen(true);
+        }
+         else{
+        setOpen(false);     
         setTodos((prevTodos: any) => {
 
             return [...prevTodos,{id:uuidv4(),name: name, completed: false} ]
@@ -35,6 +40,7 @@ export default function Top() {
         });}
         
         todoNameRef.current.value = null;
+
     
 };
 
@@ -56,6 +62,11 @@ export default function Top() {
         <div className="container">
         <Todolist todos={todos} toggleTodo={toggleTodo}/>
         <input type="text" ref={todoNameRef}/>
+        <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        message="同じタスクが存在しています。"/>
+
         <button onClick={handleAddTodo}>タスクを追加</button>
         <button  onClick={handleClear}>完了したタスクの削除</button>
         <div> 残りのタスク：{todos.filter((todo: any) => !todo.completed).length}</div> 
