@@ -1,22 +1,23 @@
-import React from 'react'
 
-const Todo = ({todo, toggleTodo}) => {
+
+const Todo = (props:any) => {
     const handleTodoClick = () => {
-        toggleTodo(todo.id)
+        props.toggleTodo(props.todo.id)
     }
   return (
     <div>
         <label >
             <input 
                 type="checkbox" 
-                checked = {todo.completed} 
+                checked = {props.todo.completed} 
                 readOnly
                 onChange={handleTodoClick}
                 />
         </label>
-        {todo.name}
+        {props.todo.name}
     </div>
   )
 }
 
 export default Todo
+
