@@ -18,7 +18,37 @@ export default function Top() {
     const todoNameRef =useRef<any>();
 
     const [open, setOpen] = React.useState(false);
+
+
+//     const handleAddTodo =() => {
+//         //タスクを追加  読み込み
+
+//         const name = todoNameRef.current.value;
+//         const result = todos.indexOf(name);
+        
+          
+//         if(result != -1 ){
+//             console.log('同じタスクが存在しています。')
+        
+//         }
+//          else{
+        
+//         setTodos((prevTodos: any) => {
+
+//             return [...prevTodos,{id:uuidv4(),name: name, completed: false} ]
+//        //　settodos 更新　前のタスクの状態(prevTodos)に今のタスクを追加
+//         });}
+        
+//         todoNameRef.current.value = null;
+
     
+// };
+
+
+
+const close =() => {
+    setOpen(false)
+}
     const handleAddTodo =() => {
         //タスクを追加  読み込み
 
@@ -65,6 +95,7 @@ export default function Top() {
         <Snackbar
         open={open}
         autoHideDuration={6000}
+        onClose={close}
         message="同じタスクが存在しています。"/>
 
         <button onClick={handleAddTodo}>タスクを追加</button>
