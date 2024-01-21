@@ -56,7 +56,7 @@ export default function Signin() {
     return (
         <div className="formContainer">
         <form onSubmit={handleSubmit(onSubmit)}>
-            <h1>ログイン</h1>
+            <h1>login</h1>
             <hr />
             <div className='uiForm'>
             <p className="errorMsg">{errorMsg}</p>
