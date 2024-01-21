@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from "react-router-dom";
+import TextField from '@mui/material/TextField';
 import "./sigmin.css"
 
 //型宣言
@@ -50,6 +51,10 @@ export default function Signin() {
         reset();
     }
 
+    const resisterUser =() => {
+        navigate("/Resister");
+    }
+
     return (
         <div className="formContainer">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,9 +63,11 @@ export default function Signin() {
             <div className='uiForm'>
             <p className="errorMsg">{errorMsg}</p>
                 <div className='formField'>
-                    <label htmlFor="userID">ユーザーID</label>
-                    <input 
-                        id = "userID"
+                    {/* <label htmlFor="userID">ユーザーID</label> */}
+                    <TextField 
+                        id="outlined-basic" 
+                        label="ユーザーID" 
+                        variant="outlined"  
                         type="text" 
                         placeholder='userID' 
                         {...register('username', { 
@@ -79,9 +86,11 @@ export default function Signin() {
                 </div>
                 <ErrorMessage errors={errors} name="username" render={({message}) => <span>{message}</span>} />
                 <div className='formField'>
-                    <label htmlFor="password">パスワード</label>
-                    <input 
-                        id = "password"
+                    {/* <label htmlFor="password">パスワード</label> */}
+                    <TextField 
+                        id="outlined-basic" 
+                        label="パスワード" 
+                        variant="outlined"
                         type="password" 
                         placeholder='password' 
                         role = 'password'
@@ -111,6 +120,12 @@ export default function Signin() {
                         className="clearButton" 
                         onClick={clearForm}
                         >クリア
+                    </button>
+                    <button
+                        type="button"
+                        className="resisterButton"
+                        onClick={resisterUser}
+                        >ユーザ情報を登録
                     </button>
                 </div>
             </div>
