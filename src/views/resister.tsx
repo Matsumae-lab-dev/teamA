@@ -1,100 +1,126 @@
-// pages/Register.tsx
-import {Component, SyntheticEvent} from "react";
-import axios from "axios"
-import {User} from '../models/user'
-import {Redirect} from 'react-router-dom'
-import { useNavigate } from "react-router-dom"; 
+//Signin.tsx
+import { useState } from "react";
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
+import { useNavigate } from "react-router-dom";
+import TextField from '@mui/material/TextField';
+import "./resiter.css"
 
-class Register extends Component {
-	id = ''
-	name = ''
-	email = ''
-	password = ''
-    registerUrl = 'http://localhost:8000/api/admin/register'
-	state = {
-		redirect: false
-	}
-
-    const navigate = useNavigate(); 
-
-	// SyntheticEvent
-	// https://ja.reactjs.org/docs/events.html
-	submit = async (e: SyntheticEvent) =&gt; {
-		// formのデフォルトの挙動をキャンセルする
-		// https://ja.reactjs.org/docs/handling-events.html
-		e.preventDefault()
- 
-		const user = new User(
-			this.id,
-			this.name,
-			this.email,
-			this.password
-		)
- 
-		// フォーマットが合っていればクラスをそのまま渡せる
- 
-		await axios.post(this.registerUrl, user)
- 
-		// 送信に成功したらリダイレクトフラグを立てる
-		this.setState({
-			redirect: true
-		})
-	}
-
-	render() {
-        if (this.state.redirect) {
-			return <Redirect to={"/Todolist"} />
-		}
-		return (
-			<main className="form-signin">
-				<form onSubmit={this.submit}>
-					<h1 className="h3 mb-3 fw-normal">Please register</h1>
-
-					<div className="form-floating">
-						<input className="form-control" placeholder="Name"
-						 onChange={e => this.id = e.target.value}
-						/>
-						<label>First Nam</label>
-					</div>
-
-					<div className="form-floating">
-						<input className="form-control" placeholder="Last Name"
-						 onChange={e => this.lastName = e.target.value}
-						/>
-						<label>Last Name</label>
-					</div>
-
-					<div className="form-floating">
-						<input type="email" className="form-control" placeholder="name@example.com"
-						 onChange={e => this.email = e.target.value}
-						/>
-						<label>Email address</label>
-					</div>
-
-					<div className="form-floating">
-						<input type="password" className="form-control" placeholder="Password"
-						 onChange={e => this.password = e.target.value}
-						/>
-						<label>Password</label>
-					</div>
-
-					<div className="form-floating">
-						<input type="password" className="form-control" placeholder="Password Confirm"
-						 onChange={e => this.passwordConfirm = e.target.value}
-						/>
-						<label>Password Confirm</label>
-					</div>
-
-					<button className="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
-				</form>
-                <button
-                    onClick={() => navigate("/Todolist")}
-                    >
-                    登録完了
-                </button>
-		  	</main>
-		)
-	}
+//型宣言
+type Inputs = {
+    username: string;
+    password: string;
 }
 
-export default Register
+export default function Signin() {
+    const navigate = useNavigate();
+    //errorMsg という名前のstate関数を宣言、初期値 null をセット
+    const [errorMsg, setErrorMsg] = useState("")
+    
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors } } = useForm<Inputs> ({ mode: 'onChange',
+    });
+
+    //ログインボタンを押した際の処理
+    const onSubmit: SubmitHandler<Inputs> = (data) =>{
+        console.log(data);
+        if (data.username === "user" && data.password === "password"){  //仮ID・パスワード
+            loginSuccess();
+        }else{
+            loginErrorMsg();
+        }
+        reset();
+    };
+    
+    //ログインに成功した場合、次のページへ遷移
+    const loginSuccess = () => {
+        navigate("/Todolist");
+    }
+
+    //ログインに失敗した場合のエラーメッセージをセット
+    const loginErrorMsg = () => {
+        //setErrorMsg()でerrorMsgの値を更新
+        setErrorMsg("ユーザーIDもしくはパスワードが不正です。");
+    }
+    
+    //入力内容をクリア
+    const clearForm = () => {
+        reset();
+    }
+
+
+    return (
+        <div className="formContainer">
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <h1>サインアップ</h1>
+            <hr />
+            <div className='uiForm'>
+            <p className="errorMsg">{errorMsg}</p>
+                <div className='formField'>
+                    {/* <label htmlFor="userID">ユーザーID</label> */}
+                    <TextField 
+                        id="outlined-basic" 
+                        label="ユーザーID" 
+                        variant="outlined"  
+                        type="text" 
+                        placeholder='userID' 
+                        {...register('username', { 
+                            required: 'ユーザーIDを入力してください。', 
+                            maxLength: {
+                                value: 20,
+                                message: '20文字以内で入力してください。'
+                            },
+                            pattern: {
+                                value:
+                                    /^[A-Za-z0-9-]+$/i,
+                            message: 'ユーザーIDの形式が不正です。',
+                            }, 
+                        })}
+                    />
+                </div>
+                <ErrorMessage errors={errors} name="username" render={({message}) => <span>{message}</span>} />
+                <div className='formField'>
+                    {/* <label htmlFor="password">パスワード</label> */}
+                    <TextField 
+                        id="outlined-basic" 
+                        label="パスワード" 
+                        variant="outlined"
+                        type="password" 
+                        placeholder='password' 
+                        role = 'password'
+                        {...register('password', { 
+                            required: 'パスワードを入力してください。', 
+                            maxLength: {
+                                value: 20,
+                                message: '20文字以内で入力してください',
+                            },
+                            pattern: {
+                                value:
+                                    /^[A-Za-z0-9]+$/i,
+                            message: 'パスワードの形式が不正です。',
+                            }, 
+                        })} 
+                    />
+                </div>
+                <ErrorMessage errors={errors} name="password" render={({message}) => <span>{message}</span>} />
+                <div className="loginButton">
+                    <button 
+                        type = "submit"
+                        className="submitButton"
+                        >サインアップ
+                    </button>
+                    <button 
+                        type = "button"
+                        className="clearButton" 
+                        onClick={clearForm}
+                        >クリア
+                    </button>
+                </div>
+            </div>
+        </form>
+        </div>
+  );
+}
