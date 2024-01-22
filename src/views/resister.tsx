@@ -6,11 +6,10 @@ import {Redirect} from 'react-router-dom'
 import { useNavigate } from "react-router-dom"; 
 
 class Register extends Component {
-	firstName = ''
-	lastName = ''
+	id = ''
+	name = ''
 	email = ''
 	password = ''
-	passwordConfirm = ''
     registerUrl = 'http://localhost:8000/api/admin/register'
 	state = {
 		redirect: false
@@ -26,11 +25,10 @@ class Register extends Component {
 		e.preventDefault()
  
 		const user = new User(
-			this.firstName,
-			this.lastName,
+			this.id,
+			this.name,
 			this.email,
-			this.password,
-			this.passwordConfirm
+			this.password
 		)
  
 		// フォーマットが合っていればクラスをそのまま渡せる
@@ -53,10 +51,10 @@ class Register extends Component {
 					<h1 className="h3 mb-3 fw-normal">Please register</h1>
 
 					<div className="form-floating">
-						<input className="form-control" placeholder="First Name"
-						 onChange={e => this.firstName = e.target.value}
+						<input className="form-control" placeholder="Name"
+						 onChange={e => this.id = e.target.value}
 						/>
-						<label>First Name</label>
+						<label>First Nam</label>
 					</div>
 
 					<div className="form-floating">
